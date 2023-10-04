@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <nav>
+        <a href="/">Homepage</a>
+        <a href="/about">About</a>
+       </nav>
+    <h2>You are on the right track for Cryptocurrency!</h2>
+    <% const name='CRYPTWES' %>
+   <h1>Home</h1> 
+    <h4> </h4>
+   
+    <dl>
+        <h3><dt>What is cryptocurrency and how does it work?</dt></h3>
+        <dd>A cryptocurrency is a digital currency, which is an alternative form of payment created using <br>
+            encryption algorithms. The use of encryption technologies means that cryptocurrencies function<br>
+            both as a currency and as a virtual accounting system.</dd> <br>
+       
+            <h3><dt>How does crypto make you money?
+            </dt></h3>
+        <dd>Some cryptocurrencies offer their owners the opportunity to earn passive income through a <br>
+            process called staking. Crypto staking involves using your cryptocurrencies to help verify <br>
+            transactions on a blockchain protocol. Though staking has its risks, it can allow you to grow <br>
+            your crypto holdings without buying more.</dd><br>
+
+
+        <h3><dt>Can cryptocurrency be converted to cash?
+</dt></h3>
+
+
+        <dd>You'll quickly exchange cryptocurrency into cash, which you can access from your cash balance<br>
+             in Coinbase.</dd><br>
+
+        <h3><dt>Is it a good idea to invest in crypto?</dt></h3>
+        <dd>Crypto is risky for a lot of reasons. But the big reason it's not a safe investment is because<br>
+             it can have huge swings in price in the blink of an eye. In the investing world, that's called <br>
+             volatility. And volatility isn't good for an investment portfolio.</dd><br>
+         </dl>  
+   
+   
+   
+    
+
+    <% if (blogs.length>0){%>
+<% blogs.forEach(blog=>{%>
+<h3 class="title"><%=blog.title %></h3>
+<p class="snippet"><%=blog.snippet %></p>
+<% }) %>
+<%}else{%>
+<p> There are no blogs to display...</p>
+ <%} %>    
+   <p><%= name %></p>
+</body>
+</html>
+
