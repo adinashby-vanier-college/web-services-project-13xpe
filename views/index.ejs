@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./partials/head.ejs') %>
+  <body style="background-color: rgb(255, 255, 255);">
+    <%- include('./partials/nav.ejs') %>
+    <div class="blogs content">
+      
+      <h3 style="font-size: 70px; font-family: monospace; margin-top: 40px;">
+        The <span style="color: rgb(255, 208, 0); text-align: center;">crypto</span> world <br>in your <span style="color: rgb(255, 208, 0);">hands</span></span>
+      </h3>
+      <br>
+      <div style="font-family: monospace; margin-top: 2em;" class="cssPrices">
+      <h2>Real-time crypto prices</h2>
+      <div style="text-align: center;">
+        <% for (let i = 0; i < prices.length; i++) { %>
+          <% if (i % 3 === 0) { %>
+            <div style="display: flex; justify-content: center;">
+              <% } %>
+                <div style="background-color: rgb(226, 226, 226); margin: 25px; display: inline-block; border-radius: 10px;">
+                  <h4><%= prices[i].name %>:</h4>
+                  <p>Price: <%= prices[i].price.toFixed(2) %> USD</p>
+                </div>
+              <% if (i % 3 === 2 || i === prices.length - 1) { %>
+            </div>
+          <% } %>
+        <% } %>
+      </div>
+
+      </div>
+
+      <h2 style="font-family: monospace; margin-top: 40px;">Fear and Greed Index Data</h2>
+      <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; margin: 20px;">
+        <img src="https://alternative.me/crypto/fear-and-greed-index.png" style="width: 367px; height: 330px; display: inline-block; margin-left: 20px;" alt="Latest Crypto Fear & Greed Index" />
+      </div>
+      
+
+    <%- include('./partials/footer.ejs') %>
+  </body>
+</html>

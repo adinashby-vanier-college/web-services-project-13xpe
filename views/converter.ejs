@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./partials/head.ejs') %>
+  <body style="background-color: rgb(255, 255, 255); font-family: 'Courier New', Courier, monospace; text-align: center; ">
+    <%- include('./partials/nav.ejs') %>
+    <div class="content">
+      <h1>Crypto converter</h1>
+      <form action="/converter" method="post" style="margin-top: 30px">
+        <label for="number">Enter the amount you want to convert ($):</label>
+        <input type="number" id="number" name="number">
+        <input type="submit" value="Submit" style="background-color: rgb(255, 208, 0)">
+      </form>
+      <% if (results !== null) { %>
+        <% for (let i = 0; i < results.length; i++) { %>
+          <div style="background-color: rgb(241, 241, 241); margin-bottom: 10px; font-family: monospace; text-align: center; margin: 25px; display: inline-block; border-radius: 10px;">
+            <h4><%= results[i].name %>:</h4>
+            <p> <%= results[i].result.toFixed(5) %> </p>
+          </div>
+        <% } %> 
+      <% } %>
+    <%- include('./partials/footer.ejs') %>
+  </body>
+</html>
