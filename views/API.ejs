@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./partials/head.ejs') %>
+  <body style="background-color: rgb(255, 255, 255); font-family: monospace;">
+    <%- include('./partials/nav.ejs') %>
+    <div class="content"  style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+      <h1>Market cap of your favorite cryptos</h1>
+      <% for (let i = 0; i < capacities.length; i++) { %>
+        <div style="background-color: rgb(255, 208, 0); margin-bottom: 10px; margin-bottom: 10px; font-family: monospace; text-align: center; margin: 25px; display: inline-block; border-radius: 10px;">
+          <h4><%= CRYPTWES[i].name %>:</h4>
+          <p>CRYPTWES' data: <%= CRYPTWES[i].name %> (<%= CRYPTWES[i].symbol %>) is: 
+    <%= CRYPTWES[i].cap.toFixed(2) %> USD, Percentage sharing in the market is <%= CRYPTWES[i].per_cap %>%</p>
+        </div>
+      <% } %> 
+    <%- include('./partials/footer.ejs') %>
+  </body>
+</html>
