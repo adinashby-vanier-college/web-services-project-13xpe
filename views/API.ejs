@@ -1,18 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
   <%- include('./partials/head.ejs') %>
-  <body style="background-color: rgb(255, 255, 255); font-family: monospace;">
+  <body style="background-color: rgb(255, 255, 255); font-family: monospace; display: flex; flex-direction: column; align-items: center;">
     <%- include('./partials/nav.ejs') %>
-    <div class="content"  style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
-      <h1>Market cap of your favorite cryptos</h1>
-      <% for (let i = 0; i < capacities.length; i++) { %>
-        <div style="background-color: rgb(255, 208, 0); margin-bottom: 10px; margin-bottom: 10px; font-family: monospace; text-align: center; margin: 25px; display: inline-block; border-radius: 10px;">
-          <h4><%= CRYPTWES[i].name %>:</h4>
-          <p>CRYPTWES' data: <%= CRYPTWES[i].name %> (<%= CRYPTWES[i].symbol %>) is: 
-    <%= CRYPTWES[i].cap.toFixed(2) %> USD, Percentage sharing in the market is <%= CRYPTWES[i].per_cap %>%</p>
+    <h1 style="text-align: center; margin-top: 20px;">CRYPTWES API</h1>
+    <div style="display: flex; flex-direction: row; justify-content: center; gap: 50px; margin-top: 20px;">
+      <div class="content" style="display: flex; flex-direction: column; align-items: center;">
+        <% for (let i = 0; i < CRYPTWES.length; i++) { %>
+          <div style="background-color: rgb(255, 208, 0); margin-bottom: 10px; font-family: monospace; text-align: center; margin: 25px; border-radius: 10px;">
+            <h4><%= CRYPTWES[i].name %>:</h4>
+            <b><h3>(<%= CRYPTWES[i].sym %>)</h3></b>
+            <p>Market cap of <%= CRYPTWES[i].name %> is: <%= CRYPTWES[i].cap.toFixed(2) %> USD</p>
+          </div>
+        <% } %> 
+      </div>
+
+      <div class="container" style="max-width: 40%; padding: 20px; margin-top: 20px; text-align: justify;">
+        <div class="data-explanation">
+          <h2 style="text-align: center;">CRYPTWES JSON Structure</h2>
+          <div style="margin-left: 20px;">
+            <p>The CRYPTWES array contains information about cryptocurrencies, including their name, symbol, and market capacity. Each element in the array is an object with the following key-value pairs:</p>
+            <ul>
+              <li><code>name</code>: The name of the cryptocurrency.</li>
+              <li><code>sym</code>: The symbol associated with the cryptocurrency.</li>
+              <li><code>cap</code>: The market capacity of the cryptocurrency.</li>
+            </ul>
+          </div>
+
+          <h3 style="margin-left: 20px;">Example:</h3>
+          <pre style="margin-left: 20px;">
+            CRYPTWES: [
+              { "name": "Bitcoin", "sym": "BTC", "cap": "1234567890" },
+              { "name": "Ethereum", "sym": "ETH", "cap": "9876543210" },
+              { "name": "Ripple", "sym": "XRP", "cap": "2468101214" },
+              ...
+            ]
+          </pre>
+
+          <h2 style="margin-top: 30px; text-align: center;">Accessing the CRYPTWES JSON Data</h2>
+          <div style="margin-left: 20px;">
+            <p>To access the JSON data, send a GET request to the appropriate API endpoint. The response will contain the CRYPTWES array in the JSON format, which can then be parsed and used in your application.</p>
+          </div>
+
+          <h3 style="margin-left: 20px;">Example API Endpoint:</h3>
+          <pre style="margin-left: 20px;">GET /api/cryptocurrencies</pre>
+
+          <h3 style="margin-left: 20px;">Response:</h3>
+          <pre style="margin-left: 20px;">
+            {
+              "CRYPTWES": [
+                { "name": "Bitcoin", "sym": "BTC", "cap": "1234567890" },
+                { "name": "Ethereum", "sym": "ETH", "cap": "9876543210" },
+                { "name": "Ripple", "sym": "XRP", "cap": "2468101214" },
+                ...
+              ]
+            }
+          </pre>
         </div>
-      <% } %> 
+      </div>
+    </div>
     <%- include('./partials/footer.ejs') %>
   </body>
 </html>
-

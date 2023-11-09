@@ -14,7 +14,7 @@ const API_KEY1 = "90c98836fd653fffdc75eec71574d690";
 const crypto_names = ["Bitcoin" , "Ethereum", "Ripple", "Dogecoin", "Solana"];
 const cities = ["Toronto", "Montreal", "London", "Paris", "Rome", "Vancouver", "Ottawa"];
 
-app.set("view engine", "ejs");
+//app.set("view engine", "ejs");
 
 app.get("/", async (req, res) => {
     try {
@@ -233,6 +233,8 @@ app.get("/news", async (req, res) => {
     let CRYPTO_NAME;
     let capacity;  
     const capacities = [];
+    let totalcap=0;
+   
     for (let i = 0; i < crypto_names.length; i++) {
            
       if (i===0) {
@@ -247,7 +249,9 @@ app.get("/news", async (req, res) => {
             }
         });
         const capacity = response.data.data.BTC.quote.USD.market_cap;
+        totalcap=totalcap+capacity;
         capacities.push({ name: CRYPTO_NAME, cap: capacity });
+        
       }
       if (i===1) {
       
@@ -261,7 +265,9 @@ app.get("/news", async (req, res) => {
               }
           });
           const capacity = response.data.data.ETH.quote.USD.market_cap;
+          totalcap=totalcap+capacity;
         capacities.push({ name: CRYPTO_NAME, cap: capacity });
+       
         }
         if (i===2) {
           
@@ -275,7 +281,9 @@ app.get("/news", async (req, res) => {
                 }
             });
             const capacity = response.data.data.XRP.quote.USD.market_cap;
+            totalcap=totalcap+capacity;
             capacities.push({ name: CRYPTO_NAME, cap: capacity });
+           
           } 
 
           if (i===3) {
@@ -290,6 +298,7 @@ app.get("/news", async (req, res) => {
                   }
               });
               const capacity = response.data.data.DOGE.quote.USD.market_cap;
+              totalcap=totalcap+capacity;
               capacities.push({ name: CRYPTO_NAME, cap: capacity });
             } 
 
@@ -305,19 +314,17 @@ app.get("/news", async (req, res) => {
                     }
                 });
                 const capacity = response.data.data.SOL.quote.USD.market_cap;
-
+                totalcap=totalcap+capacity;
                 capacities.push({ name: CRYPTO_NAME, cap: capacity });
               } 
        
     }
     res.render("news", { title: "News Page", capacities });
-    res.render("API", { title: "API Page", CRYPTWES });
+
   } catch (error) {
     console.error(error);
     res.status(500).render("error", { title: "Error" });
   }
-
-
 
   
 });
@@ -325,107 +332,116 @@ app.get("/news", async (req, res) => {
 //********************************************************************************************************
 //                                Sending data to the API 
 //********************************************************************************************************
-app.get("/API", async (req, res) => {
+
+  app.get("/API", async (req, res) => {
     try {
-  
-      let CRYPTO_NAME;
-      let capacity;  
-      const capacities = [];
-      const totalcap=0;
-      for (let i = 0; i < crypto_names.length; i++) {
-             
-        if (i===0) {
+
+        let CRYPTO_NAME;
+        let capacity;  
+        let sym;
+        let symb;
         
-        const CRYPTO_NAME = crypto_names[i];
-          const response = await axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest', {
-              headers: {
-                  'X-CMC_PRO_API_KEY': API_KEY,
-              },
-              params: {
-                  symbol: 'BTC',
-              }
-          });
-          const capacity = response.data.data.BTC.quote.USD.market_cap;
-          totalcap=totalcap+capacity;
-          CRYPTWES.push({name: CRYPTO_NAME,symbol: symbol ,per_cap: (capacity/totalcap)*100})
-        }
-        if (i===1) {
-        
+        const CRYPTWES = [];
+       
+        for (let i = 0; i < crypto_names.length; i++) {
+               
+          if (i===0) {
+          
           const CRYPTO_NAME = crypto_names[i];
             const response = await axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest', {
                 headers: {
                     'X-CMC_PRO_API_KEY': API_KEY,
                 },
                 params: {
-                    symbol: 'ETH',
+                    symbol: 'BTC',
                 }
             });
-            const capacity = response.data.data.ETH.quote.USD.market_cap;
-          totalcap=totalcap+capacity;
-          CRYPTWES.push({name: CRYPTO_NAME,symbol: symbol ,per_cap: (capacity/totalcap)*100})
-          }
-          if (i===2) {
+            symb="BTC";
+            const capacity = response.data.data.BTC.quote.USD.market_cap;
+          
+            CRYPTWES.push({ name: CRYPTO_NAME, sym:symb,  cap: capacity });
             
+          }
+          if (i===1) {
+          
             const CRYPTO_NAME = crypto_names[i];
               const response = await axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest', {
                   headers: {
                       'X-CMC_PRO_API_KEY': API_KEY,
                   },
                   params: {
-                      symbol: 'XRP',
+                      symbol: 'ETH',
                   }
               });
-              const capacity = response.data.data.XRP.quote.USD.market_cap;
-              totalcap=totalcap+capacity;
-          CRYPTWES.push({name: CRYPTO_NAME,symbol: symbol ,per_cap: (capacity/totalcap)*100})
-            } 
-  
-            if (i===3) {
-        
+              symb="ETH";
+              const capacity = response.data.data.ETH.quote.USD.market_cap;
+              
+              CRYPTWES.push({ name: CRYPTO_NAME, sym:symb,  cap: capacity });
+           
+            }
+            if (i===2) {
+              
               const CRYPTO_NAME = crypto_names[i];
                 const response = await axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest', {
                     headers: {
                         'X-CMC_PRO_API_KEY': API_KEY,
                     },
                     params: {
-                        symbol: 'DOGE',
+                        symbol: 'XRP',
                     }
                 });
-                const capacity = response.data.data.DOGE.quote.USD.market_cap;
-                capacities.push({ name: CRYPTO_NAME, cap: capacity });
-                totalcap=totalcap+capacity;
-                CRYPTWES.push({name: CRYPTO_NAME,symbol: symbol ,per_cap: (capacity/totalcap)*100})
+                symb="XRP";
+                const capacity = response.data.data.XRP.quote.USD.market_cap;
+                CRYPTWES.push({ name: CRYPTO_NAME, sym:symb,  cap: capacity});
+               
               } 
-  
-              if (i===4) {
-        
-                 const CRYPTO_NAME = crypto_names[i];
+    
+              if (i===3) {
+          
+                const CRYPTO_NAME = crypto_names[i];
                   const response = await axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest', {
                       headers: {
                           'X-CMC_PRO_API_KEY': API_KEY,
                       },
                       params: {
-                          symbol: 'SOL',
+                          symbol: 'DOGE',
                       }
                   });
-                  const capacity = response.data.data.SOL.quote.USD.market_cap;
-                  totalcap=totalcap+capacity;
-                  CRYPTWES.push({name: CRYPTO_NAME,symbol: symbol ,per_cap: (capacity/totalcap)*100})
+                  symb="DOGE";
+                  const capacity = response.data.data.DOGE.quote.USD.market_cap;
+                  
+                  CRYPTWES.push({ name: CRYPTO_NAME, sym:symb,  cap: capacity });
                 } 
-         
-      }
-      res.render("API", { title: "API Page", CRYPTWES });
-    } catch (error) {
-      console.error(error);
-      res.status(500).render("error", { title: "Error" });
-    }
-  
-  
-  
     
-  });
-  
-  
+                if (i===4) {
+          
+                   const CRYPTO_NAME = crypto_names[i];
+                    const response = await axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest', {
+                        headers: {
+                            'X-CMC_PRO_API_KEY': API_KEY,
+                        },
+                        params: {
+                            symbol: 'SOL',
+                        }
+                    });
+                    symb="SOL";
+                    const capacity = response.data.data.SOL.quote.USD.market_cap;
+             
+                    CRYPTWES.push({ name: CRYPTO_NAME, sym:symb,  cap: capacity });
+                  } 
+           
+        }
+        res.render("API", { title: "API Page" , CRYPTWES});
+        
+    
+      } catch (error) {
+        console.error(error);
+        res.status(500).render("error", { title: "Error" });
+      }
+    
+
+   
+});
   
 
 
